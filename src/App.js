@@ -36,7 +36,20 @@ function App() {
             if (loading) return 'loading...'
             if (error) return `${error.message}`
             console.log(data)
-            return <div></div>
+            return (
+              <>
+                <h2>GITHub Repository {data.search.repositoryCount}</h2>
+                <ul>
+                  {data.search.edges.map((edge) => {
+                    return (
+                      <li key={edge.node.id}>
+                        <a href={edge.node.url} target='_blank'>{edge.node.name}</a>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </>
+            )
           }
         }
       </Query>
