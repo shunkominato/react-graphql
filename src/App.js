@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import { ApolloProvider, Query } from 'react-apollo';
 import client from './client'
 import { ME, SERCH_REPO } from './graphql'
 
-const VARIABLES = {
+const initialState = {
   first: 5,
   after: null,
   last: null,
@@ -10,9 +11,22 @@ const VARIABLES = {
   query: "フロントエンドエンジニア"
 }
 function App() {
-  const {first, after, last, before, query} = VARIABLES
+  
+  const [serchQuery, setSerchQuery] = useState(initialState)
+  const {first, after, last, before, query} = serchQuery
+  const handleChange = (event) => {
+    console.log(event.target.value)
+    console.log(serchQuery)
+    setSerchQuery({...serchQuery, query: event.target.value})
+  }
+  const handleSubmit = (aa) => {
+    console.log(aa)
+  }
   return (
     <ApolloProvider client={client}>
+      <form onSubmit={handleSubmit}>
+        <input value={query} onChange={handleChange} />
+      </form>
       <div >
         a
       </div>
