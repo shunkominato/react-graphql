@@ -22,6 +22,17 @@ function App() {
   const handleSubmit = (aa) => {
     console.log(aa)
   }
+
+  const goNext = (search) => {
+    console.log(search.pageInfo.endCursor)
+    setSerchQuery({
+      ...serchQuery,
+      first: 5,
+      after: search.pageInfo.endCursor,
+      last: null,
+      before: null,
+    })
+  }
   return (
     <ApolloProvider client={client}>
       <form onSubmit={handleSubmit}>
@@ -48,6 +59,15 @@ function App() {
                     )
                   })}
                 </ul>
+                {
+                  data.search.pageInfo.hasNextPage && (
+                    <button onClick={() => goNext(data.search)}>
+                      next
+                    </button>
+                  )
+
+                }
+
               </>
             )
           }
